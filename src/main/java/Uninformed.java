@@ -1,19 +1,19 @@
 import java.util.*;
 
-public class Uninformed {
-    static final int GOAL = 0x76543210;
+public class Uninformed extends Solution {
+
     Frontier frontier;
     HashSet<Integer> explored;
-    HashMap<Integer, Integer> parentMap;
 
-    public Uninformed(Frontier algFrontier) {
+
+    Uninformed(Frontier algFrontier) {
         this.frontier = algFrontier;
         this.explored = new HashSet<>();
         this.parentMap = new HashMap<>();
     }
 
-    public boolean search(int start) {
-
+    public HashMap<Integer, Integer> search(int start) {
+        startTime = System.nanoTime();
         frontier.put(start);
         parentMap.put(start, start);
 
@@ -24,7 +24,8 @@ public class Uninformed {
             explored.add(state);
 
             if (state == GOAL) {
-                return true;
+                endTime = System.nanoTime();
+                return parentMap;
             }
             List<Integer> neighbors = State.getNeighbors(state);
             for (Integer neighbor : neighbors) {
@@ -34,6 +35,6 @@ public class Uninformed {
                 }
             }
         }
-        return false;
+        throw new IllegalStateException("Grid is unsolvable.");
     }
 }
